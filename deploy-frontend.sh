@@ -1,3 +1,4 @@
+set -e
 cd /home/ubuntu/Automate-CI-CD
 git pull
 npm run test
