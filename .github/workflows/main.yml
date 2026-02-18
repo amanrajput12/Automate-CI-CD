@@ -43,9 +43,10 @@ jobs:
               run:   aws s3 sync /home/runner/work/Automate-CI-CD/Automate-CI-CD/dist/ "s3://${S3_BUCKET_NAME}/" --delete
 
             - name: Invalidation Cloudfront   
-              run: aws cloudfront create-invalidation \
-                 --distribution-id "${CLOUDEFRONT_DISTRIBUTION_ID}" \
-                    --paths "/*" 
+              run: |
+                  aws cloudfront create-invalidation \
+                     --distribution-id "${CLOUDEFRONT_DISTRIBUTION_ID}" \
+                      --paths "/*"
 
             - name: Deployment complete
               run: echo "Frontend Deployment Sucessfully"        
