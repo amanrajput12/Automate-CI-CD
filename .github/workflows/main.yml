@@ -1,0 +1,51 @@
+name: Deploy storageApp Frontend
+on: [push,workflow_dispatch]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        env:
+            S3_BUCKET_NAME: storageapp-amaN
+            CLOUDEFRONT_DISTRIBUTION_ID: E2M94LAD5IGJGZ
+            VITE_GOOGLE_CLIENT_ID: 1001748994353-b3a4c4p9uulqutvafrp0m4db3bb7c28f.apps.googleusercontent.com
+            VITE_BACKEND_BASE_URL: https://api.tryonics.shop
+            
+        steps:
+            - name: setup Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: "23"
+            - name: checkout code
+              uses: actions/checkout@v4  
+
+            - name: Install dependecies
+              run: npm ci
+
+            - name: Run tests
+              run: npm 
+              
+            - name: Build app
+              run: npm run build
+
+            - name: print pwd
+              run: pwd
+            - name: check files
+              run: ls -a   
+
+            - name: configure Aws credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                 aws-access-key-id:  ${{secrets.AWS_ACCESS_KEY_ID}}
+                 aws-secret-access-key: ${{secrets.AWS_SECRER_ACCESS_KEY}}     
+                 aws-region: ${{secrets.AWS_REGION}}
+
+            - name: upload to s3
+              run:   aws s3 sync dist/ "s3://${S3_BUCKET_NAME}/" --recursive 
+
+            - name: Invalidation Cloudfront   
+              run: aws cloudfront create-invalidation \
+                 --distribution-id "${CLOUDEFRONT_DISTRIBUTION_ID}" \
+                    --paths "/*" 
+
+            - name: Deployment complete
+              run: echo "Frontend Deployment Sucessfully"        
