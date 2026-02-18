@@ -40,7 +40,7 @@ jobs:
                  aws-region: ${{secrets.AWS_REGION}}
 
             - name: upload to s3
-              run:   aws s3 sync dist/ "s3://${S3_BUCKET_NAME}/" --recursive 
+              run:   aws s3 sync /home/runner/work/Automate-CI-CD/Automate-CI-CD/dist/ "s3://${S3_BUCKET_NAME}/" --recursive 
 
             - name: Invalidation Cloudfront   
               run: aws cloudfront create-invalidation \
