@@ -5,6 +5,7 @@ import "./App.css";
 import Login from "./Login";
 import UsersPage from "./UsersPage";
 import Aman from "./Aman";
+import PlanPage from "./PlanPage";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
      path:"/Aman",
      element:<Aman />
+  },
+  {
+    path: "/plan",
+    element: <PlanPage />,
   },
   {
     path: "/directory/:dirId",
