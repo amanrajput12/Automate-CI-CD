@@ -164,7 +164,7 @@ async function openRazorpayPopup(selectedPlanId){
 
 
     const options =({
-    key:import.meta.env.RAZORPYA_KEY,
+    key:import.meta.env.VITE_RAZORPYA_KEY,
   
     currency:"INR",
    subscription_id:selectedPlanId,
