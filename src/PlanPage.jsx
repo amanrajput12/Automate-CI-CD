@@ -1,38 +1,67 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import "./PlanPage.css";
+import { createSubscription } from "./api/subscriptionApi";
 
 function PlanPage() {
   const [isYearly, setIsYearly] = useState(false);
   const navigate = useNavigate();
 
-  const plans = [
-    {
-      storage: 1,
-      monthlyPrice: 30,
-      yearlyPrice: 300,
-    },
-    {
-      storage: 2,
-      monthlyPrice: 50,
-      yearlyPrice: 500,
-    },
-    {
-      storage: 5,
-      monthlyPrice: 100,
-      yearlyPrice: 1000,
-    },
-  ];
+useEffect(()=>{
+  const razorpayScript = document.querySelector("#razorpay-script");
+ const script = document.createElement("script");
+
+ script.src ="https://checkout.razorpay.com/v1/checkout.js";
+ script.async = true;
+ script.id = "razorpay-script";
+ document.body.appendChild(script);
+},[])
+
+const plans = [
+  {
+    storage: 1,
+    monthlyPrice: 30,
+    yearlyPrice: 300,
+    monthlyPlanId: "plan_SNhSGBTLMOkm3p",
+    yearlyPlanId: "plan_SNhTGloisjC2Bm",
+  },
+  {
+    storage: 2,
+    monthlyPrice: 50,
+    yearlyPrice: 500,
+    monthlyPlanId: "plan_SNfcRM9rBfaO4P",
+    yearlyPlanId: "plan_SNfdzo5bahtoz2",
+  },
+  {
+    storage: 5,
+    monthlyPrice: 100,
+    yearlyPrice: 1000,
+    monthlyPlanId: "plan_SNfdAjWEF4jFw2",
+    yearlyPlanId: "plan_SNfeNIZn3ILIpg",
+  },
+];
 
   const currentPrice = (plan) => (isYearly ? plan.yearlyPrice : plan.monthlyPrice);
 
-  const handleBuyNow = (plan) => {
-    // You can add payment integration here
-    alert(
-      `Proceeding to upgrade to ${plan.storage}GB ${isYearly ? "yearly" : "monthly"} plan at ₹${currentPrice(plan)}`
-    );
-  };
+const handleBuyNow = async(plan) => {
+
+  const selectedPlanId = isYearly
+    ? plan.yearlyPlanId
+    : plan.monthlyPlanId;
+
+  alert(
+    `Plan ID: ${selectedPlanId}
+Storage: ${plan.storage}GB
+Billing: ${isYearly ? "Yearly" : "Monthly"}
+Price: ₹${currentPrice(plan)}`
+  );
+ 
+  const {subscriptionId} = await createSubscription(selectedPlanId);
+
+  openRazorpayPopup(subscriptionId)
+
+};
 
   return (
     <div className="plan-page">
@@ -127,4 +156,34 @@ function PlanPage() {
   );
 }
 
+
+
+async function openRazorpayPopup(selectedPlanId){
+
+
+
+
+    const options =({
+    key:import.meta.env.RAZORPYA_KEY,
+  
+    currency:"INR",
+   subscription_id:selectedPlanId,
+    name:"Storage Cloud",
+    theme:{
+        color:"#9f8c40b4"
+    },
+        handler:async function (response) {
+        console.log("response from razorpay",response)
+    }
+})
+
+    const rzp = new window.Razorpay(options);
+
+// rzp.on("payment.failed",function (respnse){
+//   console.log(respnse)
+// })
+// console.log("rzp are",response)
+rzp.open()
+
+}
 export default PlanPage;
