@@ -30,15 +30,15 @@ const plans = [
     storage: 2,
     monthlyPrice: 50,
     yearlyPrice: 500,
-    monthlyPlanId: "plan_SNfcRM9rBfaO4P",
-    yearlyPlanId: "plan_SNfdzo5bahtoz2",
+    monthlyPlanId: "plan_SNx0Sfs0TALnYr",
+    yearlyPlanId: "plan_SNx1HYOA7O01Gm",
   },
   {
     storage: 5,
     monthlyPrice: 100,
     yearlyPrice: 1000,
-    monthlyPlanId: "plan_SNfdAjWEF4jFw2",
-    yearlyPlanId: "plan_SNfeNIZn3ILIpg",
+    monthlyPlanId: "plan_SNx1zRHUI51P0B",
+    yearlyPlanId: "plan_SNx2ZKhcaNZqso",
   },
 ];
 
