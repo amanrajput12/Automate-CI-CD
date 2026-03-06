@@ -27,7 +27,7 @@ jobs:
             - name: Build app
               run: npm run build
               env:
-                 VITE_RAZORPYA_KEY: ${{ secretsRAZORPYA_KEY }}
+                 VITE_RAZORPYA_KEY: ${{ secrets.RAZORPYA_KEY }}
 
             - name: print pwd
               run: pwd
