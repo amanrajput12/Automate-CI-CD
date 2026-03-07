@@ -6,6 +6,8 @@ import Login from "./Login";
 import UsersPage from "./UsersPage";
 import Aman from "./Aman";
 import PlanPage from "./PlanPage";
+import PrivacyPolicy from "./Privacy";
+import Service from "./Service";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
   {
     path: "/plan",
     element: <PlanPage />,
+  },
+  {
+    path: "/privacy-policy",
+    element: <PrivacyPolicy />,
+  },
+  {
+    path: "/service",
+    element: <Service />,
   },
   {
     path: "/directory/:dirId",
