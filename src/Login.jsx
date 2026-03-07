@@ -4,6 +4,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { loginWithGoogle } from "./api/authApi";
 import { loginUser } from "./api/userApi";
 
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "procodrr@gmail.com",
@@ -109,6 +110,24 @@ const Login = () => {
           useOneTap
         />
       </div>
+     
+
+     <footer className="w-full bg-gray-100 border-t mt-auto">
+  <div className="flex justify-center space-x-4 p-4">
+    <Link
+      to="/privacy-policy"
+      className="text-blue-600 hover:text-blue-800 font-medium"
+    >
+      Privacy Policy
+    </Link>
+    <Link
+      to="/service"
+      className="text-blue-600 hover:text-blue-800 font-medium"
+    >
+      Service
+    </Link>
+  </div>
+</footer>
     </div>
   );
 };

@@ -285,10 +285,7 @@ const  response = await uploadComplete(fileId);
       }}
     >
       <div className="mx-2 md:mx-4">
-        <div className="flex justify-end space-x-4 p-4 bg-gray-100 border-b">
-          <Link to="/privacy-policy" className="text-blue-600 hover:text-blue-800 font-medium">Privacy Policy</Link>
-          <Link to="/service" className="text-blue-600 hover:text-blue-800 font-medium">Service</Link>
-        </div>
+      
         {errorMessage &&
           errorMessage !==
             "Directory not found or you do not have access to it!" && (
