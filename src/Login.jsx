@@ -34,100 +34,131 @@ const Login = () => {
   const hasError = Boolean(serverError);
 
   return (
-    <div className="max-w-md mx-auto p-5">
-      <h2 className="text-center text-2xl font-semibold mb-3">Login</h2>
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <div className="relative mb-3">
-          <label htmlFor="email" className="block mb-1 font-bold">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            placeholder="Enter your email"
-            value={formData.email}
-            onChange={handleChange}
-            className={`w-full p-2 border ${hasError ? "border-red-500" : "border-gray-300"} rounded`}
-          />
+    <div className="min-h-screen flex flex-col bg-white">
+      <div className="flex-1 max-w-2xl mx-auto w-full p-5">
+        {/* App Description Section */}
+        <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+          <h1 className="text-3xl font-bold text-blue-900 mb-3">Tryonics</h1>
+          <p className="text-gray-700 text-lg mb-4">
+            Secure cloud storage for uploading, downloading, and managing your files with complete privacy and control.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="flex items-start">
+              <span className="text-blue-600 font-bold mr-2">✓</span>
+              <span className="text-gray-700">Upload files securely to the cloud</span>
+            </div>
+            <div className="flex items-start">
+              <span className="text-blue-600 font-bold mr-2">✓</span>
+              <span className="text-gray-700">Download files anytime, anywhere</span>
+            </div>
+            <div className="flex items-start">
+              <span className="text-blue-600 font-bold mr-2">✓</span>
+              <span className="text-gray-700">Delete files permanently</span>
+            </div>
+            <div className="flex items-start">
+              <span className="text-blue-600 font-bold mr-2">✓</span>
+              <span className="text-gray-700">Privacy-first approach</span>
+            </div>
+          </div>
         </div>
 
-        <div className="relative mb-3">
-          <label htmlFor="password" className="block mb-1 font-bold">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-            className={`w-full p-2 border ${hasError ? "border-red-500" : "border-gray-300"} rounded`}
-          />
-          {serverError && (
-            <span className="absolute top-full left-0 text-red-500 text-xs mt-1">
-              {serverError}
-            </span>
-          )}
+        {/* Login Form */}
+        <div className="max-w-md mx-auto">
+          <h2 className="text-center text-2xl font-semibold mb-6">Login to Tryonics</h2>
+          <form className="flex flex-col" onSubmit={handleSubmit}>
+            <div className="relative mb-3">
+              <label htmlFor="email" className="block mb-1 font-bold">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`w-full p-2 border ${hasError ? "border-red-500" : "border-gray-300"} rounded`}
+              />
+            </div>
+
+            <div className="relative mb-3">
+              <label htmlFor="password" className="block mb-1 font-bold">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                className={`w-full p-2 border ${hasError ? "border-red-500" : "border-gray-300"} rounded`}
+              />
+              {serverError && (
+                <span className="absolute top-full left-0 text-red-500 text-xs mt-1">
+                  {serverError}
+                </span>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 rounded w-full font-medium hover:opacity-90 transition"
+            >
+              Login
+            </button>
+          </form>
+
+          <p className="text-center mt-4 text-gray-600">
+            Don't have an account?{" "}
+            <Link className="text-blue-600 hover:underline font-medium" to="/register">
+              Register
+            </Link>
+          </p>
+
+          <div className="relative text-center my-5">
+            <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 h-[1px] bg-gray-300"></div>
+            <span className="relative bg-white px-2 text-sm text-gray-600">Or continue with</span>
+          </div>
+
+          <div className="flex justify-center mb-4">
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                try {
+                  const data = await loginWithGoogle(credentialResponse.credential);
+                  if (!data.error) navigate("/");
+                } catch (err) {
+                  console.error("Google login failed:", err);
+                }
+              }}
+              onError={() => console.log("Login Failed")}
+              theme="filled_blue"
+              text="continue_with"
+              useOneTap
+            />
+          </div>
         </div>
-
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 rounded w-full font-medium hover:opacity-90"
-        >
-          Login
-        </button>
-      </form>
-
-      <p className="text-center mt-3">
-        Don't have an account?{" "}
-        <Link className="text-blue-600 hover:underline" to="/register">
-          Register
-        </Link>
-      </p>
-
-      <div className="relative text-center my-3">
-        <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 h-[2px] bg-gray-300"></div>
-        <span className="relative bg-white px-2 text-sm text-gray-600">Or</span>
       </div>
 
-      <div className="flex justify-center">
-        <GoogleLogin
-          onSuccess={async (credentialResponse) => {
-            try {
-              const data = await loginWithGoogle(credentialResponse.credential);
-              if (!data.error) navigate("/");
-            } catch (err) {
-              console.error("Google login failed:", err);
-            }
-          }}
-          onError={() => console.log("Login Failed")}
-          theme="filled_blue"
-          text="continue_with"
-          useOneTap
-        />
-      </div>
-     
-
-     <footer className="w-full bg-gray-100 border-t mt-auto">
-  <div className="flex justify-center space-x-4 p-4">
-    <Link
-      to="/privacy-policy"
-      className="text-blue-600 hover:text-blue-800 font-medium"
-    >
-      Privacy Policy
-    </Link>
-    <Link
-      to="/service"
-      className="text-blue-600 hover:text-blue-800 font-medium"
-    >
-      Service
-    </Link>
-  </div>
-</footer>
+      {/* Footer */}
+      <footer className="w-full bg-gray-100 border-t">
+        <div className="flex justify-center space-x-6 p-4 text-sm">
+          <Link
+            to="/privacy-policy"
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            to="/service"
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            Service
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 };
