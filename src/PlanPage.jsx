@@ -52,12 +52,12 @@ const handleBuyNow = async(plan) => {
     ? plan.yearlyPlanId
     : plan.monthlyPlanId;
 
-  alert(
-    `Plan ID: ${selectedPlanId}
-Storage: ${plan.storage}GB
-Billing: ${isYearly ? "Yearly" : "Monthly"}
-Price: ₹${currentPrice(plan)}`
-  );
+//   alert(
+//     `Plan ID: ${selectedPlanId}
+// Storage: ${plan.storage}GB
+// Billing: ${isYearly ? "Yearly" : "Monthly"}
+// Price: ₹${currentPrice(plan)}`
+//   );
  
   const {subscriptionId} = await createSubscription(selectedPlanId);
 
