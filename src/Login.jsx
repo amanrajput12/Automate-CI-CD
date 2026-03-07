@@ -7,7 +7,7 @@ import { loginUser } from "./api/userApi";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: "procodrr@gmail.com",
+    email: "Test@gmail.com",
     password: "abcd",
   });
   const [serverError, setServerError] = useState("");
