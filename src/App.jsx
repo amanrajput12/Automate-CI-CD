@@ -7,6 +7,9 @@ import UsersPage from "./UsersPage";
 import Aman from "./Aman";
 import PlanPage from "./PlanPage";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,8 +28,8 @@ const router = createBrowserRouter([
     element: <UsersPage />,
   },
   {
-     path:"/Aman",
-     element:<Aman />
+    path: "/Aman",
+    element: <Aman />,
   },
   {
     path: "/plan",
@@ -39,7 +42,18 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+
+      {/* Toast Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="colored"
+      />
+    </>
+  );
 }
 
 export default App;

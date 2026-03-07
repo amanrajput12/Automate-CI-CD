@@ -7,8 +7,8 @@ jobs:
         env:
             S3_BUCKET_NAME: storageapp-aman
             CLOUDEFRONT_DISTRIBUTION_ID: E2M94LAD5IGJGZ
-            VITE_GOOGLE_CLIENT_ID: 1001748994353-b3a4c4p9uulqutvafrp0m4db3bb7c28f.apps.googleusercontent.com
-            VITE_BACKEND_BASE_URL: https://apilamda.tryonics.shop
+            VITE_GOOGLE_CLIENT_ID: ${{secrets.VITE_GOOGLE_CLIENT_ID}}
+            VITE_BACKEND_BASE_URL: ${{secrets.VITE_BACKEND_BASE_URL}}
             
         steps:
             - name: setup Node

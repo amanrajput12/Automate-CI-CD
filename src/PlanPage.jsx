@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import "./PlanPage.css";
 import { createSubscription } from "./api/subscriptionApi";
+import { toast } from "react-toastify";
+
 
 function PlanPage() {
   const [isYearly, setIsYearly] = useState(false);
@@ -21,24 +23,24 @@ useEffect(()=>{
 const plans = [
   {
     storage: 1,
-    monthlyPrice: 30,
-    yearlyPrice: 300,
-    monthlyPlanId: "plan_SNhSGBTLMOkm3p",
-    yearlyPlanId: "plan_SNhTGloisjC2Bm",
+    monthlyPrice: 29,
+    yearlyPrice: 299,
+    monthlyPlanId: "plan_SOJLm4E5Shea62",
+    yearlyPlanId: "plan_SOJNg8UJYUFjkm",
   },
   {
     storage: 2,
-    monthlyPrice: 50,
-    yearlyPrice: 500,
-    monthlyPlanId: "plan_SNx0Sfs0TALnYr",
-    yearlyPlanId: "plan_SNx1HYOA7O01Gm",
+    monthlyPrice: 49,
+    yearlyPrice: 499,
+    monthlyPlanId: "plan_SOJO9vGmUoMi6w",
+    yearlyPlanId: "plan_SOJP7x2KaKj2fx",
   },
   {
     storage: 5,
-    monthlyPrice: 100,
-    yearlyPrice: 1000,
-    monthlyPlanId: "plan_SNx1zRHUI51P0B",
-    yearlyPlanId: "plan_SNx2ZKhcaNZqso",
+    monthlyPrice: 89,
+    yearlyPrice: 899,
+    monthlyPlanId: "plan_SNh9UZUuowdg3s",
+    yearlyPlanId: "plan_SOJQ5T3mmtXGNV",
   },
 ];
 
@@ -169,19 +171,28 @@ async function openRazorpayPopup(selectedPlanId){
     currency:"INR",
    subscription_id:selectedPlanId,
     name:"Storage Cloud",
+      redirect: true,
+  callback_url: "https://tryonics.shop/",
     theme:{
         color:"#9f8c40b4"
     },
         handler:async function (response) {
         console.log("response from razorpay",response)
+
+
+         toast.success("Payment Successful 🎉");
+        
     }
 })
 
     const rzp = new window.Razorpay(options);
 
-// rzp.on("payment.failed",function (respnse){
-//   console.log(respnse)
-// })
+rzp.on("payment.failed",function (respnse){
+  console.log(respnse)
+
+
+    toast.error("Payment Failed ❌ Please try again.");
+})
 // console.log("rzp are",response)
 rzp.open()
 
